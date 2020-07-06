@@ -1,0 +1,19 @@
+ssh_authorized_keys:
+- github:terotuomala
+hostname: k3os
+k3os:
+  sysctl:
+    kernel.printk: "4 4 1 7"
+    kernel.kptr_restrict: "1"
+  dns_nameservers:
+  - 8.8.8.8
+  - 1.1.1.1
+  ntp_servers:
+  - 0.fi.pool.ntp.org
+  - 1.fi.pool.ntp.org
+  - 2.fi.pool.ntp.org
+  - 3.fi.pool.ntp.org
+  password: rancher
+  k3s_args:
+  - server
+  - "--no-deploy=traefik"
