@@ -1,4 +1,4 @@
-# k3os-config-example
+# k3os-remaster-iso-example
 An example [k3os](https://github.com/rancher/k3os) ISO remastering using Docker.
 
 <!-- TABLE OF CONTENTS -->
