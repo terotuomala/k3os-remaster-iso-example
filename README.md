@@ -1,4 +1,6 @@
 # k3os-remaster-iso-example
+> **NB** The k3os project seems to be dead: https://github.com/rancher/k3os/issues/846
+
 An example [k3os](https://github.com/rancher/k3os) ISO remastering using Docker.
 
 <!-- TABLE OF CONTENTS -->
@@ -10,21 +12,22 @@ An example [k3os](https://github.com/rancher/k3os) ISO remastering using Docker.
 
 <!-- FEATURES -->
 ## Features
-- Docker image (Ubuntu 20.04) with all the necessary tools installed in order to [remaster](https://github.com/rancher/k3os#remastering-iso) the k3os ISO file.
+- Docker image (Ubuntu 22.04) with all the necessary tools installed in order to [remaster](https://github.com/rancher/k3os#remastering-iso) the k3os ISO file.
+
 - Customizable configuration ([config.yml](https://github.com/terotuomala/k3os-remaster-iso-example/blob/master/config.yml) and [grub.cfg](https://github.com/terotuomala/k3os-remaster-iso-example/blob/master/grub.cfg)) which can be modified before executing the Docker container that does the actual remastering.
+
 - Possibility to use different [k3os release versions](https://github.com/rancher/k3os/releases) by defining it as an environment variable when executing the Docker container.
+
 - Access to the remastered ISO file from the directory where the Docker container was executed.
 
 <!-- PREREQUISITES -->
 ## Prerequisites
-**NB.** The setup is tested on `macOS Mojave`.
+Docker Desktop [installed](https://docs.docker.com/get-docker/).
 
-Docker Desktop [installed](https://docs.docker.com/install/).
-```sh
-# If you don't want to sign up in order to download Docker
-# use the following command to download the installer directly
-$ curl -s https://download.docker.com/mac/stable/Docker.dmg
-```
+<!-- USAGE -->
+## Usage
+**NB.** The setup is tested on `macOS Monterey`.
+
 Edit the [config.yml](https://github.com/terotuomala/k3os-remaster-iso-example/blob/master/config.yml) to fit your needs. The configuration refence can be found from [here](https://github.com/rancher/k3os#configuration-reference).
 ```yaml
 ssh_authorized_keys:
@@ -48,8 +51,6 @@ k3os:
   - "--no-deploy=traefik"
 ```
 
-<!-- USAGE -->
-## Usage
 Build the Docker image:
 ```sh
 $ docker build -t k3os-custom-iso .
@@ -58,7 +59,7 @@ Run the Docker container using the image build in previous step:
 ```sh
 $ docker run --rm -it -v ${PWD}:/k3os --privileged k3os-custom-iso
 ```
-In order to use different **k3os** version than the default one **v0.11.0-rc1** please add the desired [release version](https://github.com/rancher/k3os/releases) as an environment variable:
+In order to use different **k3os** version than the default one **v0.21.5-k3s2r1** please add the desired [release version](https://github.com/rancher/k3os/releases) as an environment variable:
 ```sh
 $ docker run --rm -it -v ${PWD}:/k3os --privileged -e k3os_release_version=<DESIRED_RELEASE_VERSION> k3os-custom-iso
 ```
