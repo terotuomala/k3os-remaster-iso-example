@@ -1,13 +1,25 @@
 ssh_authorized_keys:
 - github:terotuomala
+write_files:
+- content: |
+    ifenslave bond0 eth0
+    ifenslave bond0 eth1
+    ifenslave bond0 eth2
+    ifenslave bond0 eth3
+    ifconfig bond0 192.168.1.11 netmask 255.255.255.0 up
+    rc-service issue restart
+  owner: root:root
+  path: /etc/bonding
+  permissions: '0755'
 hostname: k3os
+run_cmd:
+- /etc/bonding
 k3os:
+  modules:
+  - bonding mode=4 miimon=100 lacp_rate=1
   sysctl:
     kernel.printk: "4 4 1 7"
     kernel.kptr_restrict: "1"
-  dns_nameservers:
-  - 8.8.8.8
-  - 1.1.1.1
   ntp_servers:
   - 0.fi.pool.ntp.org
   - 1.fi.pool.ntp.org
@@ -17,3 +29,4 @@ k3os:
   k3s_args:
   - server
   - "--no-deploy=traefik"
+  - "--disable-cloud-controller"
